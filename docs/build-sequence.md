@@ -20,19 +20,26 @@ Once credentials are in hand, Phase 1 can begin.
 
 ## Phase 1: Project Scaffolding
 
-**Goal:** Empty React app running locally with Supabase connected.
+**Goal:** Empty React app running locally with Supabase connected, shadcn/ui initialized, and Vercel SPA routing configured.
 
 - Initialize React project with Vite
 - Install and configure Tailwind CSS
+- Configure path alias (`@/` → `src/`) in `vite.config.js` and `tsconfig.json` / `jsconfig.json`
+- Run `npx shadcn@latest init` — generates `components.json`, installs base dependencies
+- Install shadcn components used by the app: `dialog`, `sheet`, `select`, `alert-dialog`, `badge`, `popover`, `calendar`, `button`, `dropdown-menu`
 - Install Supabase JS client (`@supabase/supabase-js`)
 - Create `lib/supabase.js` with client init (env vars for URL and anon key)
 - Set up React Router with `/board/:slug` route and `/` redirect to `/board/product-project-board`
 - Create placeholder `BoardShell.jsx` that renders the slug from the URL
+- Commit `vercel.json` at repo root for SPA fallback routing:
+  ```json
+  { "rewrites": [{ "source": "/(.*)", "destination": "/" }] }
+  ```
 - Confirm the app runs on localhost and connects to Supabase
 
 **Depends on:** Prerequisites complete (Supabase project exists, anon key and URL available).
 
-**Testable output:** App loads at `localhost:5173/board/product-project-board` and displays the slug.
+**Testable output:** App loads at `localhost:5173/board/product-project-board` and displays the slug. `vercel.json` committed. shadcn components importable.
 
 ---
 

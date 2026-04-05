@@ -67,9 +67,12 @@ src/
 │
 ├── utils/
 │   ├── csv.js                   # CSV parse/serialize logic
-│   ├── colors.js                # Color palette for badges and options
+│   ├── colors.js                # Named color palette → Tailwind class map (10 colors: gray, blue, yellow, green, red, orange, purple, pink, teal, indigo)
 │   ├── slugify.js               # Label → value key conversion (used for options and CSV import)
 │   └── fieldDefaults.js         # Default field definitions (mirrors DB seed)
+│
+├── vercel.json                  # SPA fallback: rewrites all routes to index.html
+└── components.json              # shadcn/ui configuration
 │
 ├── App.jsx                      # Router + global providers
 └── index.jsx                    # Entry point
@@ -175,4 +178,9 @@ Using dnd-kit (`@dnd-kit/core`, `@dnd-kit/sortable`). When a card is dropped:
 | Table filtering | Client-side only | Projects already in memory; filtering is array manipulation. No additional Supabase query needed. Filter state not persisted. |
 | CSV parsing | Client-side (Papaparse) | No server needed; handles edge cases well |
 | Styling | Tailwind CSS | Fast iteration, consistent with modern React patterns |
+| UI components | shadcn/ui | Radix UI primitives + Tailwind; copy-into-codebase model means no runtime dependency lock-in. Covers modal (Dialog), slide-out panel (Sheet), dropdown (Select), date picker (Popover + Calendar), confirm dialog (AlertDialog), and button. Custom components built for Badge (product-specific color logic), EmptyState, and PersonPicker (combobox with team member data). |
 | Option value keys | Slugified from label | Lowercase + underscores, strip non-alphanumeric. Consistent with seed data pattern. |
+| Badge color palette | 10 named colors mapped to Tailwind classes | Fixed set (gray, blue, yellow, green, red, orange, purple, pink, teal, indigo) covers status/priority defaults and team member variety. Users pick from swatches in Settings — no free-form hex input. Defined in `utils/colors.js`. |
+| Automated testing | None in v1 | Solo portfolio project; no complex business logic that isn't immediately verifiable visually. Real risk surface is the Supabase integration, best validated by using the app against a live dev instance. Intentional decision — not an oversight. |
+| SPA routing (Vercel) | `vercel.json` rewrite rule | Prevents 404 on direct navigation to `/board/:slug` in production. Committed in Phase 1. |
+| Schema migrations | Manual via Supabase SQL Editor | Numbered migration files in `supabase/migrations/` run manually in the dashboard. Appropriate for solo project with infrequent schema changes. `supabase/migrations/` is the source of truth — run files in order to rebuild from scratch. |

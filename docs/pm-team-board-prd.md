@@ -490,6 +490,11 @@ Since this is both a team tool and a portfolio project, success has two dimensio
 | RD-21 | CSV import: unmatched person names | Flagged in post-import summary; not auto-created | Auto-creating team members from CSV could pollute the team list with typos; user review is safer |
 | RD-22 | New project display_order | Append to bottom (max + 1) | Cheaper than bulk-incrementing existing cards; matches natural expectation that new work lands at the bottom |
 | RD-23 | Table filtering | Client-side only; not persisted | Projects already in memory; no Supabase query needed; filter state cleared on refresh is acceptable |
+| RD-24 | UI component library | shadcn/ui | Radix UI primitives + Tailwind; copy-into-codebase model avoids runtime dependency lock-in; covers modal, sheet, select, date picker, alert dialog out of the box; best fit for Tailwind + Vite + React 18 stack |
+| RD-25 | Badge color palette | 10 named colors, fixed list | gray, blue, yellow, green, red, orange, purple, pink, teal, indigo mapped to Tailwind classes in colors.js; users pick from swatches, no free-form hex; sufficient variety for status/priority defaults and team member badges |
+| RD-26 | Automated testing | None in v1 — manual testing only | Solo portfolio project; visual verification against live Supabase dev instance is the most reliable test for this app's risk surface; intentional decision documented to distinguish from oversight |
+| RD-27 | Vercel SPA routing | vercel.json rewrite rule committed in Phase 1 | Prevents 404 on direct navigation to /board/:slug in production; trivial to add upfront, painful to debug in Phase 12 |
+| RD-28 | Schema migration strategy | Manual numbered SQL files via Supabase SQL Editor | supabase/migrations/ is source of truth; run files in order to rebuild; appropriate for solo project with infrequent schema changes; no CLI tooling required |
 
 ## **10.2 Open Questions**
 
